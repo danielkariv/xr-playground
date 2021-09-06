@@ -11,6 +11,7 @@ config_version=4
 [application]
 
 config/name="XR Project"
+run/main_scene="res://game/Game.tscn"
 config/icon="res://icon.png"
 
 [editor_plugins]
@@ -21,10 +22,16 @@ enabled=PoolStringArray( "res://addons/godot-openxr/plugin.cfg" )
 
 singletons=[ "res://addons/godot-openxr/godot_openxr.gdnlib" ]
 
+[input_devices]
+
+buffering/agile_event_flushing=true
+
 [physics]
 
 common/enable_pause_aware_picking=true
 
 [rendering]
 
+quality/filters/anisotropic_filter_level=8
+quality/filters/msaa=2
 environment/default_environment="res://default_env.tres"
