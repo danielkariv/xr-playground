@@ -30,23 +30,25 @@ split_offset = 1000
 
 [node name="Label" type="Label" parent="PanelContainer/VSplitContainer/HSplitContainer"]
 margin_top = 3.0
-margin_right = 906.0
+margin_right = 894.0
 margin_bottom = 17.0
 text = "Window Label"
 
 [node name="HSplitContainer" type="HSplitContainer" parent="PanelContainer/VSplitContainer/HSplitContainer"]
-margin_left = 918.0
+margin_left = 906.0
 margin_right = 1010.0
 margin_bottom = 20.0
 
 [node name="OptionButton" type="OptionButton" parent="PanelContainer/VSplitContainer/HSplitContainer/HSplitContainer"]
-margin_right = 60.0
+margin_right = 72.0
 margin_bottom = 20.0
-text = "Float"
+text = "Item 0"
+items = [ "Item 0", null, false, 0, null, "Item 1", null, false, 1, null, "Item 2", null, false, 2, null, "Item 3", null, false, 3, null, "Item 4", null, false, 4, null, "Item 5", null, false, 5, null, "Item 6", null, false, 6, null, "Item 7", null, false, 7, null, "Item 8", null, false, 8, null, "Item 9", null, false, 9, null, "Item 10", null, false, 10, null, "Item 11", null, false, 11, null ]
+selected = 0
 
 [node name="Button" type="Button" parent="PanelContainer/VSplitContainer/HSplitContainer/HSplitContainer"]
-margin_left = 72.0
-margin_right = 92.0
+margin_left = 84.0
+margin_right = 104.0
 margin_bottom = 20.0
 text = "X"
 
