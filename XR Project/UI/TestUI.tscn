@@ -1,0 +1,75 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/Roboto/Roboto-Medium.ttf" type="DynamicFontData" id=1]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 1 )
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VSplitContainer" type="VSplitContainer" parent="PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 593.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSplitContainer" type="HSplitContainer" parent="PanelContainer/VSplitContainer"]
+margin_right = 1010.0
+margin_bottom = 20.0
+split_offset = 1000
+
+[node name="Label" type="Label" parent="PanelContainer/VSplitContainer/HSplitContainer"]
+margin_top = 3.0
+margin_right = 894.0
+margin_bottom = 17.0
+text = "Window Label"
+
+[node name="HSplitContainer" type="HSplitContainer" parent="PanelContainer/VSplitContainer/HSplitContainer"]
+margin_left = 906.0
+margin_right = 1010.0
+margin_bottom = 20.0
+
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/VSplitContainer/HSplitContainer/HSplitContainer"]
+margin_right = 72.0
+margin_bottom = 20.0
+text = "Item 0"
+items = [ "Item 0", null, false, 0, null, "Item 1", null, false, 1, null, "Item 2", null, false, 2, null, "Item 3", null, false, 3, null, "Item 4", null, false, 4, null, "Item 5", null, false, 5, null, "Item 6", null, false, 6, null, "Item 7", null, false, 7, null, "Item 8", null, false, 8, null, "Item 9", null, false, 9, null, "Item 10", null, false, 10, null, "Item 11", null, false, 11, null ]
+selected = 0
+
+[node name="Button" type="Button" parent="PanelContainer/VSplitContainer/HSplitContainer/HSplitContainer"]
+margin_left = 84.0
+margin_right = 104.0
+margin_bottom = 20.0
+text = "X"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/VSplitContainer"]
+margin_top = 32.0
+margin_right = 1010.0
+margin_bottom = 586.0
+custom_colors/default_color = Color( 1, 1, 1, 1 )
+custom_fonts/normal_font = SubResource( 1 )
+text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sollicitudin arcu vel congue consequat. Vivamus id auctor quam, aliquam rutrum erat. Nulla congue tristique imperdiet. Pellentesque scelerisque sollicitudin aliquet. Morbi sit amet ipsum dolor. Aliquam id ante eget lacus feugiat pretium sed vitae nulla. Morbi non auctor libero. Phasellus feugiat, ex eget luctus maximus, sem nisl consectetur mauris, eget convallis ex augue et ipsum. Cras porttitor mi maximus elit tincidunt vulputate. Etiam est turpis, rutrum eu tempus vitae, iaculis aliquam libero. Donec in metus vel enim vestibulum congue. Suspendisse at malesuada lectus. Suspendisse mollis ipsum fringilla lorem scelerisque, pellentesque cursus ipsum tristique. Integer placerat lacus nec ligula accumsan lacinia.
+
+Proin suscipit ac lectus non porttitor. Donec aliquam, nunc ac imperdiet fermentum, lectus velit sodales neque, hendrerit suscipit nibh est ut nisi. Curabitur vestibulum purus nec sodales feugiat. Phasellus in nisl sit amet lacus feugiat feugiat. Integer et aliquet leo. Etiam dolor ligula, euismod id velit ut, dapibus interdum neque. Sed lobortis lacinia quam. Nullam interdum lorem in eros egestas tempor. Curabitur velit diam, hendrerit non lorem ac, vehicula ultrices ipsum. Vivamus varius sem id placerat tempor. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas tempus fermentum nibh sed maximus. Quisque sagittis sodales porta. Sed vitae elit et augue condimentum imperdiet. Nulla facilisi. Integer viverra orci et iaculis sollicitudin.
+
+Suspendisse viverra luctus sem quis pellentesque. Sed auctor, turpis sed venenatis mollis, nulla tellus sodales ipsum, commodo mattis elit purus in tortor. Nunc massa nulla, blandit sit amet urna at, finibus luctus mauris. Sed dignissim magna auctor velit tincidunt mollis quis eleifend ex. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nec ante et orci porttitor ornare quis a nisl. Fusce maximus diam nec turpis tincidunt, vel auctor tellus congue. Praesent porttitor tortor tortor, non congue metus varius eget. Nunc sed lacus lacus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque ac diam vel arcu maximus faucibus. Sed vestibulum ante ipsum, id convallis quam sagittis et. Sed mattis iaculis augue, at lobortis turpis pulvinar id.
+
+Suspendisse posuere erat eget ullamcorper mattis. Nam at eleifend turpis, vel mollis elit. Aliquam sit amet diam dictum, volutpat enim id, consectetur ante. Donec eleifend accumsan justo, eu tristique felis pulvinar ut. Mauris lobortis, augue vel faucibus scelerisque, metus magna vehicula diam, nec convallis nunc nunc non dolor. Nunc in ligula mi. Duis ornare erat consectetur, pellentesque eros id, mollis urna. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+
+Integer malesuada massa quis est vulputate, sit amet blandit lectus fringilla. Mauris a accumsan diam. Sed pharetra lacus erat, ac hendrerit elit vestibulum ut. Pellentesque vitae libero tellus. In hac habitasse platea dictumst. Duis sit amet erat tincidunt, suscipit libero et, efficitur sapien. Integer sagittis sem eu nisi pharetra faucibus. Nunc id viverra ante.
+
+Vivamus ut ornare urna. Nam ornare lacus non magna auctor convallis. Integer ac arcu vitae justo sollicitudin venenatis non ac sapien. Sed placerat nunc ligula, non ultrices augue maximus vitae. Praesent blandit lectus non nisl ultrices, at tempor velit sodales. Cras sit amet imperdiet turpis. Etiam imperdiet ultricies hendrerit. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam sit amet magna lacus. Praesent sodales placerat lorem vel eleifend. Donec vestibulum lacus blandit, mollis nisi quis, venenatis odio.
+
+Maecenas ac orci fringilla, aliquam mi quis, malesuada ex. Fusce eget tempus lectus. Integer consectetur mi eros, id auctor tortor faucibus lacinia. Sed a convallis erat. Praesent varius posuere enim. Integer felis mauris, hendrerit in nulla in, tristique convallis mi. Nam luctus luctus consectetur. Praesent sit amet metus ultrices, gravida sapien eu, vulputate ligula. Suspendisse vehicula risus sit amet egestas volutpat. Pellentesque augue massa, finibus ac aliquam venenatis, vestibulum at ante. Nullam maximus malesuada dolor ut mollis. Aliquam mauris tellus, iaculis sit amet turpis aliquet, auctor maximus lacus.
+
+Fusce ut vulputate diam. Ut vulputate volutpat sem ac mattis. Nullam lobortis nisi id augue lacinia auctor. Fusce auctor tempor neque, eu volutpat arcu pellentesque ut. Donec mattis orci sagittis maximus imperdiet. Donec quis ultrices ipsum. Integer velit libero, tempor et sapien quis, mollis rhoncus magna. Curabitur tellus urna, ornare a est vehicula, cursus imperdiet sem. Donec convallis nisl at lobortis tristique. Morbi hendrerit enim a ipsum mollis, eu tristique velit sollicitudin. Proin convallis vel justo vel luctus. Pellentesque sit amet nisl sodales, gravida tortor eu, ullamcorper elit. Donec imperdiet neque nec rhoncus malesuada. Ut id elit at metus sagittis luctus nec sed quam. Cras eu enim pharetra, viverra nulla ut, vestibulum felis. Vivamus tempor venenatis congue. "

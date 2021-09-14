@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://game/Game.gd" type="Script" id=1]
 [ext_resource path="res://game/mat_dark1.tres" type="Material" id=2]
@@ -8,6 +8,9 @@
 [ext_resource path="res://addons/godot-openxr/scenes/right_hand_mesh.tscn" type="PackedScene" id=6]
 [ext_resource path="res://addons/godot-openxr/scenes/left_hand_mesh.tscn" type="PackedScene" id=7]
 [ext_resource path="res://XRBodyController/XRController.cs" type="Script" id=8]
+[ext_resource path="res://UI/TestUI.tscn" type="PackedScene" id=9]
+[ext_resource path="res://UI/UIPanel.tscn" type="PackedScene" id=10]
+[ext_resource path="res://UI/AreaToucher.cs" type="Script" id=11]
 
 [sub_resource type="ProceduralSky" id=5]
 
@@ -15,6 +18,25 @@
 background_mode = 2
 background_sky = SubResource( 5 )
 tonemap_mode = 2
+ssao_quality = 2
+dof_blur_far_amount = 0.05
+dof_blur_far_quality = 2
+glow_enabled = true
+glow_bicubic_upscale = true
+
+[sub_resource type="ViewportTexture" id=13]
+viewport_path = NodePath("UIPanel/Mesh/Viewport")
+
+[sub_resource type="SpatialMaterial" id=14]
+resource_local_to_scene = true
+albedo_texture = SubResource( 13 )
+
+[sub_resource type="ViewportTexture" id=15]
+viewport_path = NodePath("UIPanel2/Mesh/Viewport")
+
+[sub_resource type="SpatialMaterial" id=16]
+resource_local_to_scene = true
+albedo_texture = SubResource( 15 )
 
 [sub_resource type="CubeMesh" id=7]
 size = Vector3( 32, 2, 32 )
@@ -51,10 +73,6 @@ directional_shadow_depth_range = 1
 
 [node name="XRBodyController" parent="." instance=ExtResource( 4 )]
 
-[node name="MeshInstance" type="MeshInstance" parent="XRBodyController/ARVRCamera" index="0"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0996051, -2.36853 )
-skeleton = NodePath("../..")
-
 [node name="LeftController" parent="XRBodyController" index="1"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00144196, 0, 0.0104303 )
 script = ExtResource( 8 )
@@ -70,12 +88,48 @@ remote_path = NodePath("../LeftController")
 [node name="LeftHand" parent="XRBodyController/LeftRemoteTransform" instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00144196, 0, -0.0104303 )
 
+[node name="Skeleton" parent="XRBodyController/LeftRemoteTransform/LeftHand/HandModel/Armature001" index="0"]
+bones/9/bound_children = [ NodePath("IndexTip") ]
+
+[node name="IndexTip" parent="XRBodyController/LeftRemoteTransform/LeftHand/HandModel/Armature001/Skeleton" index="1"]
+transform = Transform( 0.19221, -0.669965, -0.717079, 0.977075, 0.19881, 0.076153, 0.0915428, -0.715277, 0.692819, 0.0345973, 0.0355402, -0.164767 )
+
+[node name="Spatial" type="Spatial" parent="XRBodyController/LeftRemoteTransform/LeftHand/HandModel/Armature001/Skeleton/IndexTip" index="0"]
+script = ExtResource( 11 )
+
+[node name="RayCast" type="RayCast" parent="XRBodyController/LeftRemoteTransform/LeftHand/HandModel/Armature001/Skeleton/IndexTip/Spatial"]
+cast_to = Vector3( 0, 0, -0.1 )
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_thickness = 3.0
+
 [node name="RightRemoteTransform" type="RemoteTransform" parent="XRBodyController"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00144196, 0, 0.0104303 )
 remote_path = NodePath("../RightController")
 
 [node name="RightHand" parent="XRBodyController/RightRemoteTransform" instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00144196, 0, -0.0104303 )
+
+[node name="Skeleton" parent="XRBodyController/RightRemoteTransform/RightHand/HandModel/Armature" index="0"]
+bones/9/bound_children = [ NodePath("IndexTip") ]
+
+[node name="IndexTip" parent="XRBodyController/RightRemoteTransform/RightHand/HandModel/Armature/Skeleton" index="1"]
+transform = Transform( 0.19221, 0.669966, 0.717078, -0.091543, -0.715277, 0.69282, 0.977075, -0.19881, -0.0761527, -0.0345978, -0.164767, -0.0355401 )
+
+[node name="UIPanel" parent="." instance=ExtResource( 10 )]
+
+[node name="Mesh" parent="UIPanel" index="0"]
+material/0 = SubResource( 14 )
+
+[node name="CanvasLayer" parent="UIPanel/Mesh/Viewport" index="0" instance=ExtResource( 9 )]
+
+[node name="UIPanel2" parent="." instance=ExtResource( 10 )]
+transform = Transform( 0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 0.961515, 1, -1.62989 )
+
+[node name="Mesh" parent="UIPanel2" index="0"]
+material/0 = SubResource( 16 )
+
+[node name="CanvasLayer" parent="UIPanel2/Mesh/Viewport" index="0" instance=ExtResource( 9 )]
 
 [node name="Map" type="Spatial" parent="."]
 
@@ -140,3 +194,9 @@ material/0 = ExtResource( 5 )
 shape = SubResource( 12 )
 
 [editable path="XRBodyController"]
+[editable path="XRBodyController/LeftRemoteTransform/LeftHand"]
+[editable path="XRBodyController/LeftRemoteTransform/LeftHand/HandModel"]
+[editable path="XRBodyController/RightRemoteTransform/RightHand"]
+[editable path="XRBodyController/RightRemoteTransform/RightHand/HandModel"]
+[editable path="UIPanel"]
+[editable path="UIPanel2"]
