@@ -13,6 +13,8 @@ public class UIPanel : Area
 	private float _viewportWidth = 720.0f;
 	[Export]
 	private float _depth = 0.05f;
+	[Export]
+	private float _clickDistance = 0.033f;
 	private Vector2 _screenSize;
 
 	// Called when the node enters the scene tree for the first time.
@@ -60,7 +62,7 @@ public class UIPanel : Area
 			_viewport.Input(inputEvent);
 
 		// Based on distanct, calling left button's pressed or released action.
-		if (distance < 0.02f)
+		if (distance < _clickDistance)
 		{
 			InputEventMouseButton mouseButton = new InputEventMouseButton();
 			mouseButton.ButtonIndex = (int)ButtonList.Left;

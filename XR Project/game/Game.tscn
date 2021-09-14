@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://game/Game.gd" type="Script" id=1]
 [ext_resource path="res://game/mat_dark1.tres" type="Material" id=2]
@@ -25,12 +25,18 @@ glow_enabled = true
 glow_bicubic_upscale = true
 
 [sub_resource type="ViewportTexture" id=13]
-flags = 4
 viewport_path = NodePath("UIPanel/Mesh/Viewport")
 
 [sub_resource type="SpatialMaterial" id=14]
 resource_local_to_scene = true
 albedo_texture = SubResource( 13 )
+
+[sub_resource type="ViewportTexture" id=15]
+viewport_path = NodePath("UIPanel2/Mesh/Viewport")
+
+[sub_resource type="SpatialMaterial" id=16]
+resource_local_to_scene = true
+albedo_texture = SubResource( 15 )
 
 [sub_resource type="CubeMesh" id=7]
 size = Vector3( 32, 2, 32 )
@@ -111,12 +117,19 @@ bones/9/bound_children = [ NodePath("IndexTip") ]
 transform = Transform( 0.19221, 0.669966, 0.717078, -0.091543, -0.715277, 0.69282, 0.977075, -0.19881, -0.0761527, -0.0345978, -0.164767, -0.0355401 )
 
 [node name="UIPanel" parent="." instance=ExtResource( 10 )]
-_depth = 1.0
 
 [node name="Mesh" parent="UIPanel" index="0"]
 material/0 = SubResource( 14 )
 
 [node name="CanvasLayer" parent="UIPanel/Mesh/Viewport" index="0" instance=ExtResource( 9 )]
+
+[node name="UIPanel2" parent="." instance=ExtResource( 10 )]
+transform = Transform( 0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 0.961515, 1, -1.62989 )
+
+[node name="Mesh" parent="UIPanel2" index="0"]
+material/0 = SubResource( 16 )
+
+[node name="CanvasLayer" parent="UIPanel2/Mesh/Viewport" index="0" instance=ExtResource( 9 )]
 
 [node name="Map" type="Spatial" parent="."]
 
@@ -186,3 +199,4 @@ shape = SubResource( 12 )
 [editable path="XRBodyController/RightRemoteTransform/RightHand"]
 [editable path="XRBodyController/RightRemoteTransform/RightHand/HandModel"]
 [editable path="UIPanel"]
+[editable path="UIPanel2"]
