@@ -10,7 +10,7 @@
 [ext_resource path="res://XRBodyController/XRController.cs" type="Script" id=8]
 [ext_resource path="res://UI/TestUI.tscn" type="PackedScene" id=9]
 [ext_resource path="res://UI/UIPanel.tscn" type="PackedScene" id=10]
-[ext_resource path="res://UI/AreaToucher.cs" type="Script" id=11]
+[ext_resource path="res://UI/AreaToucher.tscn" type="PackedScene" id=11]
 
 [sub_resource type="ProceduralSky" id=5]
 
@@ -25,6 +25,7 @@ glow_enabled = true
 glow_bicubic_upscale = true
 
 [sub_resource type="ViewportTexture" id=13]
+flags = 13
 viewport_path = NodePath("UIPanel/Mesh/Viewport")
 
 [sub_resource type="SpatialMaterial" id=14]
@@ -32,6 +33,7 @@ resource_local_to_scene = true
 albedo_texture = SubResource( 13 )
 
 [sub_resource type="ViewportTexture" id=15]
+flags = 11
 viewport_path = NodePath("UIPanel2/Mesh/Viewport")
 
 [sub_resource type="SpatialMaterial" id=16]
@@ -66,9 +68,9 @@ environment = SubResource( 6 )
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 0.961262, 0.137819, -0.238709, 0, 0.866025, 0.5, 0.275637, -0.480631, 0.832477, 0, 0, 0 )
 shadow_enabled = true
-shadow_bias = 0.05
+shadow_bias = 0.01
 directional_shadow_blend_splits = true
-directional_shadow_normal_bias = 0.2
+directional_shadow_normal_bias = 0.1
 directional_shadow_depth_range = 1
 
 [node name="XRBodyController" parent="." instance=ExtResource( 4 )]
@@ -94,14 +96,7 @@ bones/9/bound_children = [ NodePath("IndexTip") ]
 [node name="IndexTip" parent="XRBodyController/LeftRemoteTransform/LeftHand/HandModel/Armature001/Skeleton" index="1"]
 transform = Transform( 0.19221, -0.669965, -0.717079, 0.977075, 0.19881, 0.076153, 0.0915428, -0.715277, 0.692819, 0.0345973, 0.0355402, -0.164767 )
 
-[node name="Spatial" type="Spatial" parent="XRBodyController/LeftRemoteTransform/LeftHand/HandModel/Armature001/Skeleton/IndexTip" index="0"]
-script = ExtResource( 11 )
-
-[node name="RayCast" type="RayCast" parent="XRBodyController/LeftRemoteTransform/LeftHand/HandModel/Armature001/Skeleton/IndexTip/Spatial"]
-cast_to = Vector3( 0, 0, -0.1 )
-collide_with_areas = true
-collide_with_bodies = false
-debug_shape_thickness = 3.0
+[node name="AreaToucher" parent="XRBodyController/LeftRemoteTransform/LeftHand/HandModel/Armature001/Skeleton/IndexTip" index="0" instance=ExtResource( 11 )]
 
 [node name="RightRemoteTransform" type="RemoteTransform" parent="XRBodyController"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00144196, 0, 0.0104303 )
@@ -115,6 +110,8 @@ bones/9/bound_children = [ NodePath("IndexTip") ]
 
 [node name="IndexTip" parent="XRBodyController/RightRemoteTransform/RightHand/HandModel/Armature/Skeleton" index="1"]
 transform = Transform( 0.19221, 0.669966, 0.717078, -0.091543, -0.715277, 0.69282, 0.977075, -0.19881, -0.0761527, -0.0345978, -0.164767, -0.0355401 )
+
+[node name="Spatial" parent="XRBodyController/RightRemoteTransform/RightHand/HandModel/Armature/Skeleton/IndexTip" index="0" instance=ExtResource( 11 )]
 
 [node name="UIPanel" parent="." instance=ExtResource( 10 )]
 

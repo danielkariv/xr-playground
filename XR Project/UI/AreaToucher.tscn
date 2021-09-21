@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://UI/AreaToucher.cs" type="Script" id=1]
+
+[node name="Spatial" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="RayCast" type="RayCast" parent="."]
+cast_to = Vector3( 0, 0, -0.1 )
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_thickness = 3.0
