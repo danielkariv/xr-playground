@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class XRController : ARVRController
+public class ControllerService : ARVRController
 {
 	/* Stuff we could do with Controllers:
 	* .get_is_active = return true when controller active
@@ -36,14 +36,14 @@ public class XRController : ARVRController
 		set => _velocity = value;
 	}
 	public override void _Ready()
-    {
-        
-    }
-    public override void _PhysicsProcess(float delta)
-    {
+	{
+		
+	}
+	public override void _PhysicsProcess(float delta)
+	{
 		_velocity = GetVelocity(delta);
 	}
-    public override void _Input(InputEvent @event)
+	public override void _Input(InputEvent @event)
 	{
 		if(@event is InputEventJoypadMotion || @event is InputEventJoypadButton)
 			UpdateControllerInput();
@@ -68,7 +68,7 @@ public class XRController : ARVRController
 	/// <param name="delta">Delta time</param>
 	/// <returns></returns>
 	private Vector3 GetVelocity(float delta)
-    {
+	{
 		Vector3 velocity = _oldPositionTime.Position - this.GlobalTransform.origin;
 		velocity /= _oldPositionTime.delta + delta;
 

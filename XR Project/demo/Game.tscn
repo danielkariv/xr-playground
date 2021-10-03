@@ -1,16 +1,15 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=27 format=2]
 
-[ext_resource path="res://game/Game.gd" type="Script" id=1]
-[ext_resource path="res://game/mat_dark1.tres" type="Material" id=2]
-[ext_resource path="res://game/mat_green1.tres" type="Material" id=3]
-[ext_resource path="res://XRBodyController/XRBodyController.tscn" type="PackedScene" id=4]
-[ext_resource path="res://game/mat_red1.tres" type="Material" id=5]
-[ext_resource path="res://addons/godot-openxr/scenes/right_hand_mesh.tscn" type="PackedScene" id=6]
-[ext_resource path="res://addons/godot-openxr/scenes/left_hand_mesh.tscn" type="PackedScene" id=7]
-[ext_resource path="res://XRBodyController/XRController.cs" type="Script" id=8]
-[ext_resource path="res://UI/TestUI.tscn" type="PackedScene" id=9]
-[ext_resource path="res://UI/UIPanel.tscn" type="PackedScene" id=10]
-[ext_resource path="res://UI/AreaToucher.tscn" type="PackedScene" id=11]
+[ext_resource path="res://SceneNodes/Services/ControllerService/ControllerService.cs" type="Script" id=1]
+[ext_resource path="res://SceneNodes/UI/PanelInteractor/PanelInteractor.tscn" type="PackedScene" id=2]
+[ext_resource path="res://SceneNodes/MovementSystem/XRBodyController/XRBodyController.tscn" type="PackedScene" id=3]
+[ext_resource path="res://SceneNodes/UI/Panel3D/Panel3D.tscn" type="PackedScene" id=4]
+[ext_resource path="res://demo/TestUI.tscn" type="PackedScene" id=5]
+[ext_resource path="res://SceneNodes/InteractionSystem/PickupHand/PickupHand.cs" type="Script" id=6]
+[ext_resource path="res://demo/Game.gd" type="Script" id=7]
+[ext_resource path="res://demo/mat_dark1.tres" type="Material" id=8]
+[ext_resource path="res://demo/mat_red1.tres" type="Material" id=9]
+[ext_resource path="res://demo/mat_green1.tres" type="Material" id=10]
 
 [sub_resource type="ProceduralSky" id=5]
 
@@ -24,12 +23,20 @@ dof_blur_far_quality = 2
 glow_enabled = true
 glow_bicubic_upscale = true
 
+[sub_resource type="SphereMesh" id=20]
+radius = 0.05
+height = 0.1
+
+[sub_resource type="SphereShape" id=17]
+radius = 0.25
+
 [sub_resource type="ViewportTexture" id=13]
 flags = 13
 viewport_path = NodePath("UIPanel/Mesh/Viewport")
 
 [sub_resource type="SpatialMaterial" id=14]
 resource_local_to_scene = true
+flags_transparent = true
 albedo_texture = SubResource( 13 )
 
 [sub_resource type="ViewportTexture" id=15]
@@ -38,6 +45,7 @@ viewport_path = NodePath("UIPanel2/Mesh/Viewport")
 
 [sub_resource type="SpatialMaterial" id=16]
 resource_local_to_scene = true
+flags_transparent = true
 albedo_texture = SubResource( 15 )
 
 [sub_resource type="CubeMesh" id=7]
@@ -47,7 +55,7 @@ size = Vector3( 32, 2, 32 )
 data = PoolVector3Array( -16, 1, 16, 16, 1, 16, -16, -1, 16, 16, 1, 16, 16, -1, 16, -16, -1, 16, 16, 1, -16, -16, 1, -16, 16, -1, -16, -16, 1, -16, -16, -1, -16, 16, -1, -16, 16, 1, 16, 16, 1, -16, 16, -1, 16, 16, 1, -16, 16, -1, -16, 16, -1, 16, -16, 1, -16, -16, 1, 16, -16, -1, -16, -16, 1, 16, -16, -1, 16, -16, -1, -16, 16, 1, 16, -16, 1, 16, 16, 1, -16, -16, 1, 16, -16, 1, -16, 16, 1, -16, -16, -1, 16, 16, -1, 16, -16, -1, -16, 16, -1, 16, 16, -1, -16, -16, -1, -16 )
 
 [sub_resource type="CubeMesh" id=9]
-material = ExtResource( 3 )
+material = ExtResource( 10 )
 size = Vector3( 6, 2, 2 )
 
 [sub_resource type="ConcavePolygonShape" id=10]
@@ -59,8 +67,12 @@ size = Vector3( 4, 4, 4 )
 [sub_resource type="ConcavePolygonShape" id=12]
 data = PoolVector3Array( -2, 2, 2, 2, 2, 2, -2, -2, 2, 2, 2, 2, 2, -2, 2, -2, -2, 2, 2, 2, -2, -2, 2, -2, 2, -2, -2, -2, 2, -2, -2, -2, -2, 2, -2, -2, 2, 2, 2, 2, 2, -2, 2, -2, 2, 2, 2, -2, 2, -2, -2, 2, -2, 2, -2, 2, -2, -2, 2, 2, -2, -2, -2, -2, 2, 2, -2, -2, 2, -2, -2, -2, 2, 2, 2, -2, 2, 2, 2, 2, -2, -2, 2, 2, -2, 2, -2, 2, 2, -2, -2, -2, 2, 2, -2, 2, -2, -2, -2, 2, -2, 2, 2, -2, -2, -2, -2, -2 )
 
+[sub_resource type="SphereMesh" id=18]
+
+[sub_resource type="SphereShape" id=19]
+
 [node name="Game" type="Spatial"]
-script = ExtResource( 1 )
+script = ExtResource( 7 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 6 )
@@ -73,60 +85,66 @@ directional_shadow_blend_splits = true
 directional_shadow_normal_bias = 0.1
 directional_shadow_depth_range = 1
 
-[node name="XRBodyController" parent="." instance=ExtResource( 4 )]
+[node name="LeftRemoteTransform" type="RemoteTransform" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00144196, 0, 0.0104303 )
+remote_path = NodePath("../XRBodyController/LeftController")
+
+[node name="RightRemoteTransform" type="RemoteTransform" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00144196, 0, 0.0104303 )
+remote_path = NodePath("../XRBodyController/RightController")
+
+[node name="XRBodyController" parent="." instance=ExtResource( 3 )]
 
 [node name="LeftController" parent="XRBodyController" index="1"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00144196, 0, 0.0104303 )
-script = ExtResource( 8 )
+script = ExtResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="XRBodyController/LeftController" index="0"]
+transform = Transform( 1, 8.84756e-09, 1.49012e-08, 3.72529e-09, 1, -3.72529e-09, 1.49012e-08, -3.72529e-09, 1, -2.32831e-10, 0, 2.79397e-09 )
+mesh = SubResource( 20 )
+skeleton = NodePath("../PickupZone")
+material/0 = null
+
+[node name="PickupZone" type="Spatial" parent="XRBodyController/LeftController" index="1"]
+transform = Transform( 1, 4.51691e-08, -1.19209e-07, 9.31323e-09, 1, -3.72529e-09, 4.47035e-07, 2.23517e-08, 1, 7.21775e-09, -2.79397e-09, 4.37722e-08 )
+script = ExtResource( 6 )
+_controllerPath = NodePath("..")
+_shape = SubResource( 17 )
+
+[node name="UI-Interactor" parent="XRBodyController/LeftController" index="2" instance=ExtResource( 2 )]
 
 [node name="RightController" parent="XRBodyController" index="2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00144196, 0, 0.0104303 )
-script = ExtResource( 8 )
+script = ExtResource( 1 )
 
-[node name="LeftRemoteTransform" type="RemoteTransform" parent="XRBodyController"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00144196, 0, 0.0104303 )
-remote_path = NodePath("../LeftController")
+[node name="MeshInstance" type="MeshInstance" parent="XRBodyController/RightController" index="0"]
+transform = Transform( 1, 8.84756e-09, 1.49012e-08, 3.72529e-09, 1, -3.72529e-09, 1.49012e-08, -3.72529e-09, 1, -2.32831e-10, 0, 2.79397e-09 )
+mesh = SubResource( 20 )
+skeleton = NodePath("../../LeftController/PickupZone")
+material/0 = null
 
-[node name="LeftHand" parent="XRBodyController/LeftRemoteTransform" instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00144196, 0, -0.0104303 )
+[node name="UI-Interactor" parent="XRBodyController/RightController" index="1" instance=ExtResource( 2 )]
 
-[node name="Skeleton" parent="XRBodyController/LeftRemoteTransform/LeftHand/HandModel/Armature001" index="0"]
-bones/9/bound_children = [ NodePath("IndexTip") ]
-
-[node name="IndexTip" parent="XRBodyController/LeftRemoteTransform/LeftHand/HandModel/Armature001/Skeleton" index="1"]
-transform = Transform( 0.19221, -0.669965, -0.717079, 0.977075, 0.19881, 0.076153, 0.0915428, -0.715277, 0.692819, 0.0345973, 0.0355402, -0.164767 )
-
-[node name="AreaToucher" parent="XRBodyController/LeftRemoteTransform/LeftHand/HandModel/Armature001/Skeleton/IndexTip" index="0" instance=ExtResource( 11 )]
-
-[node name="RightRemoteTransform" type="RemoteTransform" parent="XRBodyController"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00144196, 0, 0.0104303 )
-remote_path = NodePath("../RightController")
-
-[node name="RightHand" parent="XRBodyController/RightRemoteTransform" instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00144196, 0, -0.0104303 )
-
-[node name="Skeleton" parent="XRBodyController/RightRemoteTransform/RightHand/HandModel/Armature" index="0"]
-bones/9/bound_children = [ NodePath("IndexTip") ]
-
-[node name="IndexTip" parent="XRBodyController/RightRemoteTransform/RightHand/HandModel/Armature/Skeleton" index="1"]
-transform = Transform( 0.19221, 0.669966, 0.717078, -0.091543, -0.715277, 0.69282, 0.977075, -0.19881, -0.0761527, -0.0345978, -0.164767, -0.0355401 )
-
-[node name="Spatial" parent="XRBodyController/RightRemoteTransform/RightHand/HandModel/Armature/Skeleton/IndexTip" index="0" instance=ExtResource( 11 )]
-
-[node name="UIPanel" parent="." instance=ExtResource( 10 )]
+[node name="UIPanel" parent="." instance=ExtResource( 4 )]
 
 [node name="Mesh" parent="UIPanel" index="0"]
 material/0 = SubResource( 14 )
 
-[node name="CanvasLayer" parent="UIPanel/Mesh/Viewport" index="0" instance=ExtResource( 9 )]
+[node name="Viewport" parent="UIPanel/Mesh" index="0"]
+transparent_bg = true
 
-[node name="UIPanel2" parent="." instance=ExtResource( 10 )]
+[node name="CanvasLayer" parent="UIPanel/Mesh/Viewport" index="0" instance=ExtResource( 5 )]
+
+[node name="UIPanel2" parent="." instance=ExtResource( 4 )]
 transform = Transform( 0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 0.961515, 1, -1.62989 )
 
 [node name="Mesh" parent="UIPanel2" index="0"]
 material/0 = SubResource( 16 )
 
-[node name="CanvasLayer" parent="UIPanel2/Mesh/Viewport" index="0" instance=ExtResource( 9 )]
+[node name="Viewport" parent="UIPanel2/Mesh" index="0"]
+transparent_bg = true
+
+[node name="CanvasLayer" parent="UIPanel2/Mesh/Viewport" index="0" instance=ExtResource( 5 )]
 
 [node name="Map" type="Spatial" parent="."]
 
@@ -135,7 +153,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
 use_in_baked_light = true
 mesh = SubResource( 7 )
 skeleton = NodePath("../..")
-material/0 = ExtResource( 2 )
+material/0 = ExtResource( 8 )
 
 [node name="StaticBody" type="StaticBody" parent="Map/MeshInstance"]
 
@@ -159,7 +177,7 @@ transform = Transform( 0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -10, 2, -9 
 use_in_baked_light = true
 mesh = SubResource( 11 )
 skeleton = NodePath("../..")
-material/0 = ExtResource( 5 )
+material/0 = ExtResource( 9 )
 
 [node name="StaticBody" type="StaticBody" parent="Map/MeshInstance3"]
 
@@ -171,7 +189,7 @@ transform = Transform( 0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, -11, 2, -4 
 use_in_baked_light = true
 mesh = SubResource( 11 )
 skeleton = NodePath("../..")
-material/0 = ExtResource( 5 )
+material/0 = ExtResource( 9 )
 
 [node name="StaticBody" type="StaticBody" parent="Map/MeshInstance4"]
 
@@ -183,17 +201,27 @@ transform = Transform( 0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 10, 2, -10 
 use_in_baked_light = true
 mesh = SubResource( 11 )
 skeleton = NodePath("../..")
-material/0 = ExtResource( 5 )
+material/0 = ExtResource( 9 )
 
 [node name="StaticBody" type="StaticBody" parent="Map/MeshInstance5"]
 
 [node name="CollisionShape" type="CollisionShape" parent="Map/MeshInstance5/StaticBody"]
 shape = SubResource( 12 )
 
+[node name="RigidBody" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.59277, 1.91426, 1.26678 )
+continuous_cd = true
+can_sleep = false
+
+[node name="MeshInstance" type="MeshInstance" parent="RigidBody"]
+mesh = SubResource( 18 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="RigidBody"]
+shape = SubResource( 19 )
+
 [editable path="XRBodyController"]
-[editable path="XRBodyController/LeftRemoteTransform/LeftHand"]
-[editable path="XRBodyController/LeftRemoteTransform/LeftHand/HandModel"]
-[editable path="XRBodyController/RightRemoteTransform/RightHand"]
-[editable path="XRBodyController/RightRemoteTransform/RightHand/HandModel"]
+[editable path="XRBodyController/LeftController/UI-Interactor"]
+[editable path="XRBodyController/RightController/UI-Interactor"]
 [editable path="UIPanel"]
 [editable path="UIPanel2"]

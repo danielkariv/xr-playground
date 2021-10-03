@@ -1,15 +1,13 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://assets/Roboto/Roboto-Medium.ttf" type="DynamicFontData" id=1]
-
-[sub_resource type="DynamicFont" id=1]
-font_data = ExtResource( 1 )
+[ext_resource path="res://demo/theme.tres" type="Theme" id=2]
 
 [node name="CanvasLayer" type="CanvasLayer"]
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -25,39 +23,38 @@ __meta__ = {
 
 [node name="HSplitContainer" type="HSplitContainer" parent="PanelContainer/VSplitContainer"]
 margin_right = 1010.0
-margin_bottom = 20.0
+margin_bottom = 25.0
 split_offset = 1000
 
 [node name="Label" type="Label" parent="PanelContainer/VSplitContainer/HSplitContainer"]
 margin_top = 3.0
-margin_right = 894.0
-margin_bottom = 17.0
+margin_right = 891.0
+margin_bottom = 22.0
 text = "Window Label"
 
 [node name="HSplitContainer" type="HSplitContainer" parent="PanelContainer/VSplitContainer/HSplitContainer"]
-margin_left = 906.0
+margin_left = 903.0
 margin_right = 1010.0
-margin_bottom = 20.0
+margin_bottom = 25.0
 
 [node name="OptionButton" type="OptionButton" parent="PanelContainer/VSplitContainer/HSplitContainer/HSplitContainer"]
-margin_right = 72.0
-margin_bottom = 20.0
+margin_right = 73.0
+margin_bottom = 25.0
 text = "Item 0"
 items = [ "Item 0", null, false, 0, null, "Item 1", null, false, 1, null, "Item 2", null, false, 2, null, "Item 3", null, false, 3, null, "Item 4", null, false, 4, null, "Item 5", null, false, 5, null, "Item 6", null, false, 6, null, "Item 7", null, false, 7, null, "Item 8", null, false, 8, null, "Item 9", null, false, 9, null, "Item 10", null, false, 10, null, "Item 11", null, false, 11, null ]
 selected = 0
 
 [node name="Button" type="Button" parent="PanelContainer/VSplitContainer/HSplitContainer/HSplitContainer"]
-margin_left = 84.0
-margin_right = 104.0
-margin_bottom = 20.0
+margin_left = 85.0
+margin_right = 107.0
+margin_bottom = 25.0
 text = "X"
 
 [node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/VSplitContainer"]
-margin_top = 32.0
+margin_top = 37.0
 margin_right = 1010.0
 margin_bottom = 586.0
 custom_colors/default_color = Color( 1, 1, 1, 1 )
-custom_fonts/normal_font = SubResource( 1 )
 text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sollicitudin arcu vel congue consequat. Vivamus id auctor quam, aliquam rutrum erat. Nulla congue tristique imperdiet. Pellentesque scelerisque sollicitudin aliquet. Morbi sit amet ipsum dolor. Aliquam id ante eget lacus feugiat pretium sed vitae nulla. Morbi non auctor libero. Phasellus feugiat, ex eget luctus maximus, sem nisl consectetur mauris, eget convallis ex augue et ipsum. Cras porttitor mi maximus elit tincidunt vulputate. Etiam est turpis, rutrum eu tempus vitae, iaculis aliquam libero. Donec in metus vel enim vestibulum congue. Suspendisse at malesuada lectus. Suspendisse mollis ipsum fringilla lorem scelerisque, pellentesque cursus ipsum tristique. Integer placerat lacus nec ligula accumsan lacinia.
 
 Proin suscipit ac lectus non porttitor. Donec aliquam, nunc ac imperdiet fermentum, lectus velit sodales neque, hendrerit suscipit nibh est ut nisi. Curabitur vestibulum purus nec sodales feugiat. Phasellus in nisl sit amet lacus feugiat feugiat. Integer et aliquet leo. Etiam dolor ligula, euismod id velit ut, dapibus interdum neque. Sed lobortis lacinia quam. Nullam interdum lorem in eros egestas tempor. Curabitur velit diam, hendrerit non lorem ac, vehicula ultrices ipsum. Vivamus varius sem id placerat tempor. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas tempus fermentum nibh sed maximus. Quisque sagittis sodales porta. Sed vitae elit et augue condimentum imperdiet. Nulla facilisi. Integer viverra orci et iaculis sollicitudin.

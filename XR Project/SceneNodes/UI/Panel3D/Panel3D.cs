@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class UIPanel : Area
+public class Panel3D : Area
 {
 	// TODO: set panel size from script, building viewport and mesh size to fit.
 	private MeshInstance _mesh;

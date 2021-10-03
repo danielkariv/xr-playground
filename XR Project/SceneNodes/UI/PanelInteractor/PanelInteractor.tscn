@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://UI/AreaToucher.cs" type="Script" id=1]
+[ext_resource path="res://SceneNodes/UI/PanelInteractor/PanelInteractor.cs" type="Script" id=1]
 
-[node name="Spatial" type="Spatial"]
+[node name="PanelInteractor" type="Spatial"]
 script = ExtResource( 1 )
 
 [node name="RayCast" type="RayCast" parent="."]

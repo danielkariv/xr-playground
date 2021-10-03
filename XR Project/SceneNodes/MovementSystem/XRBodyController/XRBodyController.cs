@@ -3,19 +3,19 @@ using System;
 
 public class XRBodyController : ARVROrigin
 {
-	private XRController _lController, _rController;
+	private ControllerService _lController, _rController;
 	private ARVRCamera camera;
 
 	private float _speed = 5.0f;
 	public override void _Ready()
 	{
-		_lController = (XRController)(ARVRController)GetNode("LeftController");
-		_rController = (XRController)(ARVRController)GetNode("RightController");
+		_lController = (ControllerService)(ARVRController)GetNode("LeftController");
+		_rController = (ControllerService)(ARVRController)GetNode("RightController");
 		camera = (ARVRCamera)GetNode("ARVRCamera");
 
-		if (!(_lController is XRController))
+		if (!(_lController is ControllerService))
 			GD.PrintErr("Couldn't find Left Controller.");
-		if (!(_rController is XRController))
+		if (!(_rController is ControllerService))
 			GD.PrintErr("Couldn't find Right Controller.");
 		if (!(camera is ARVRCamera))
 			GD.PrintErr("Couldn't find Camera(HMD).");

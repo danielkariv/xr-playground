@@ -11,7 +11,7 @@ config_version=4
 [application]
 
 config/name="XR Project"
-run/main_scene="res://game/Game.tscn"
+run/main_scene="res://demo/Game.tscn"
 config/icon="res://icon.png"
 
 [editor_plugins]
@@ -29,6 +29,7 @@ buffering/agile_event_flushing=true
 [physics]
 
 common/enable_pause_aware_picking=true
+3d/physics_engine="Bullet"
 
 [rendering]
 
@@ -36,4 +37,5 @@ quality/filters/sharpen_intensity=0.33
 quality/filters/anisotropic_filter_level=8
 quality/filters/msaa=2
 quality/filters/use_fxaa=true
+quality/depth/hdr=false
 environment/default_environment="res://default_env.tres"
