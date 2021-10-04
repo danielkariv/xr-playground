@@ -14,6 +14,11 @@ config/name="XR Project"
 run/main_scene="res://demo/Game.tscn"
 config/icon="res://icon.png"
 
+[display]
+
+window/size/width=1280
+window/size/height=720
+
 [editor_plugins]
 
 enabled=PoolStringArray( "res://addons/godot-openxr/plugin.cfg" )
@@ -25,6 +30,11 @@ singletons=[ "res://addons/godot-openxr/godot_openxr.gdnlib" ]
 [input_devices]
 
 buffering/agile_event_flushing=true
+
+[layer_names]
+
+3d_physics/layer_1="Default"
+3d_physics/layer_2="Interactable"
 
 [physics]
 

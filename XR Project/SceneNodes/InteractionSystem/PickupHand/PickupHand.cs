@@ -64,7 +64,6 @@ public class PickupHand : Spatial
 					if (item["collider"] is RigidBody body)
 					{
 						float dist = body.GlobalTransform.origin.DistanceTo(GlobalTransform.origin);
-						GD.Print(dist);
 						if (distance >= dist)
 						{
 							distance = dist;
@@ -77,7 +76,6 @@ public class PickupHand : Spatial
 			{
 				holdingTarget = null;
 			}
-			GD.Print("Targeting: " + holdingTarget);
 		}
 		else
 		{
@@ -86,7 +84,6 @@ public class PickupHand : Spatial
 				// adjust velocity to move toward hand.
 				//holdingTarget.LinearVelocity = (Transform.origin - holdingTarget.Transform.origin) / delta;
 				//GD.Print("Velo: " + holdingTarget.LinearVelocity);
-				GD.Print("holding!");
 				holdingTarget.GlobalTransform = GlobalTransform;
 				
 				// adjust angular velocity to rotate to hand.

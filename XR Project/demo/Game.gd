@@ -6,6 +6,7 @@ func _ready() -> void:
 	var VR = ARVRServer.find_interface("OpenXR")
 	if VR and VR.initialize():
 		get_viewport().arvr = true
+		get_viewport().keep_3d_linear = true;
 		# TODO: find display frame rate and set the physics fps to it.
 		OS.vsync_enabled = false
 		Engine.target_fps = 90
