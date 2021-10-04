@@ -4,7 +4,7 @@ using System;
 public class ControllerService : ARVRController
 {
 	public Vector2 PrimaryJoystick = Vector2.Zero;
-	public Vector2 SecondaryJoystick = Vector2.Zero;
+	public bool IsJoystickPressed = false, IsJoystickJustPressed = false, IsJoystickJustReleased = false;
 	public float TriggerAnalog = -1.0f;
 	public bool IsTriggerPressed = false, IsTriggerJustPressed = false, IsTriggerJustReleased = false;
 	public float GripAnalog = -1.0f;
@@ -17,47 +17,47 @@ public class ControllerService : ARVRController
 	// each input needs: bool isPressed, bool isJustPressed, bool isJustReleased, float getHoldTime, float value
 	public override void _Process(float delta)
 	{
-		
-		TriggerAnalog = this.GetJoystickAxis((int)JoystickList.VrAnalogTrigger); // Trigger Axis (-1 to 1)
-		bool triggerbutton = this.IsButtonPressed((int)JoystickList.VrTrigger) == 1;
-		IsTriggerJustPressed = (!IsTriggerPressed && triggerbutton && !IsTriggerJustPressed);
-		IsTriggerJustReleased = (IsTriggerPressed && !triggerbutton && !IsTriggerJustReleased);
-		IsTriggerPressed = triggerbutton; // Trigger button
-		
-		GripAnalog = this.GetJoystickAxis((int)JoystickList.VrAnalogGrip); // Grip Axis (-1 to 1)
-		bool gripbutton = this.IsButtonPressed((int)JoystickList.VrGrip) == 1;
-		IsGripJustPressed = (!IsGripPressed && gripbutton && !IsGripJustPressed);
-		IsGripJustReleased = (IsGripPressed && !gripbutton && !IsGripJustReleased);
-		IsGripPressed = gripbutton; // Trigger button
+		if (this.GetIsActive()){
+			TriggerAnalog = this.GetJoystickAxis((int)JoystickList.VrAnalogTrigger); // Trigger Axis (-1 to 1)
+			bool triggerbutton = this.IsButtonPressed((int)JoystickList.VrTrigger) == 1;
+			IsTriggerJustPressed = (!IsTriggerPressed && triggerbutton && !IsTriggerJustPressed);
+			IsTriggerJustReleased = (IsTriggerPressed && !triggerbutton && !IsTriggerJustReleased);
+			IsTriggerPressed = triggerbutton; // Trigger button
+			
+			GripAnalog = this.GetJoystickAxis((int)JoystickList.VrAnalogGrip); // Grip Axis (-1 to 1)
+			bool gripbutton = this.IsButtonPressed((int)JoystickList.VrGrip) == 1;
+			IsGripJustPressed = (!IsGripPressed && gripbutton && !IsGripJustPressed);
+			IsGripJustReleased = (IsGripPressed && !gripbutton && !IsGripJustReleased);
+			IsGripPressed = gripbutton; // Trigger button
 
-		PrimaryJoystick.x = this.GetJoystickAxis((int)JoystickList.Axis0); // X axis Primary Joystick
-		PrimaryJoystick.y = this.GetJoystickAxis((int)JoystickList.Axis1); // Y axis Primary Joystick
-		GD.Print(this.IsButtonPressed((int)JoystickList.Button12)); // ???
-		this.IsButtonPressed((int)JoystickList.Button14); // ???
-		SecondaryJoystick.x = this.GetJoystickAxis((int)JoystickList.Axis6); // X axis Secondary Joystick?
-		SecondaryJoystick.y = this.GetJoystickAxis((int)JoystickList.Axis7); // Y axis Secondary Joystick?
-		this.IsButtonPressed((int)JoystickList.Button11); // ???
-		this.IsButtonPressed((int)JoystickList.Button13); // ???
+			PrimaryJoystick.x = this.GetJoystickAxis((int)JoystickList.Axis0); // X axis Primary Joystick
+			PrimaryJoystick.y = this.GetJoystickAxis((int)JoystickList.Axis1); // Y axis Primary Joystick
+			bool joystickbutton = this.IsButtonPressed((int)JoystickList.VrPad) == 1;
+			IsJoystickJustPressed = (!IsJoystickPressed && joystickbutton && !IsJoystickJustPressed);
+			IsJoystickJustReleased = (IsJoystickPressed && !joystickbutton && !IsJoystickJustReleased);
+			IsJoystickPressed = joystickbutton; // Joystick button
 
-		bool axbutton = this.IsButtonPressed((int)JoystickList.Button7) == 1;
-		IsAXJustPressed = (!IsAXPressed && axbutton && !IsAXJustPressed);
-		IsAXJustReleased = (IsAXPressed && !axbutton && !IsAXJustReleased);
-		IsAXPressed = axbutton; // A/X button ( depends on controller)
-		
-		bool bybutton = this.IsButtonPressed((int)JoystickList.Button1) == 1;
-		IsBYJustPressed = (!IsBYPressed && bybutton && !IsBYJustPressed);
-		IsBYJustReleased = (IsBYPressed && !bybutton && !IsBYJustReleased);
-		IsBYPressed = bybutton; // B/Y button ( depends on controller)
+			bool axbutton = this.IsButtonPressed((int)JoystickList.Button7) == 1;
+			IsAXJustPressed = (!IsAXPressed && axbutton && !IsAXJustPressed);
+			IsAXJustReleased = (IsAXPressed && !axbutton && !IsAXJustReleased);
+			IsAXPressed = axbutton; // A/X button ( depends on controller)
+			
+			bool bybutton = this.IsButtonPressed((int)JoystickList.Button1) == 1;
+			IsBYJustPressed = (!IsBYPressed && bybutton && !IsBYJustPressed);
+			IsBYJustReleased = (IsBYPressed && !bybutton && !IsBYJustReleased);
+			IsBYPressed = bybutton; // B/Y button ( depends on controller)
 
-		bool menubutton = this.IsButtonPressed((int)JoystickList.Button3) == 1;
-		IsMenuJustPressed = (!IsMenuPressed && menubutton && !IsMenuJustPressed);
-		IsMenuJustReleased = (IsMenuPressed && !menubutton && !IsMenuJustReleased);
-		IsMenuPressed = menubutton; // Menu button
+			bool menubutton = this.IsButtonPressed((int)JoystickList.Button3) == 1;
+			IsMenuJustPressed = (!IsMenuPressed && menubutton && !IsMenuJustPressed);
+			IsMenuJustReleased = (IsMenuPressed && !menubutton && !IsMenuJustReleased);
+			IsMenuPressed = menubutton; // Menu button
 
-		bool selectbutton = this.IsButtonPressed((int)JoystickList.Button4) == 1;
-		IsSelectJustPressed = (!IsSelectPressed && selectbutton && !IsSelectJustPressed);
-		IsSelectJustReleased = (IsSelectPressed && !selectbutton && !IsSelectJustReleased);
-		IsSelectPressed = selectbutton;  // Select button
+			bool selectbutton = this.IsButtonPressed((int)JoystickList.Button4) == 1;
+			IsSelectJustPressed = (!IsSelectPressed && selectbutton && !IsSelectJustPressed);
+			IsSelectJustReleased = (IsSelectPressed && !selectbutton && !IsSelectJustReleased);
+			IsSelectPressed = selectbutton;  // Select button
+			
+		}
 
 	}
 

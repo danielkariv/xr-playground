@@ -38,10 +38,9 @@ public class XRBodyController : ARVROrigin
 	/// <param name="delta">Delta time</param>
 	public void updateFreeMoveCamera(float delta)
 	{
-		Vector3 joystickPos = new Vector3(_lController.Input.JoystickXAxis, 0, _lController.Input.JoystickYAxis);
-		joystickPos = Vector3.Zero;
-		joystickPos += -camera.Transform.basis.z * _lController.Input.JoystickYAxis;
-		joystickPos += camera.Transform.basis.x * _lController.Input.JoystickXAxis;
+		Vector3 joystickPos = Vector3.Zero;
+		joystickPos += -camera.Transform.basis.z * _lController.PrimaryJoystick.y;
+		joystickPos += camera.Transform.basis.x * _lController.PrimaryJoystick.x;
 		this.Transform = this.Transform.Translated(joystickPos * _speed * delta);
 	}
 	/// <summary>
@@ -50,10 +49,9 @@ public class XRBodyController : ARVROrigin
 	/// <param name="delta">Delta time</param>
 	public void updateFreeMoveController(float delta)
 	{
-		Vector3 joystickPos = new Vector3(_lController.Input.JoystickXAxis, 0, _lController.Input.JoystickYAxis);
-		joystickPos = Vector3.Zero;
-		joystickPos += -_lController.Transform.basis.z * _lController.Input.JoystickYAxis;
-		joystickPos += _lController.Transform.basis.x * _lController.Input.JoystickXAxis;
+		Vector3 joystickPos = Vector3.Zero;
+		joystickPos += -_lController.Transform.basis.z * _lController.PrimaryJoystick.y;
+		joystickPos += _lController.Transform.basis.x * _lController.PrimaryJoystick.x;
 		this.Transform = this.Transform.Translated(joystickPos * _speed * delta);
 	}
 	/// <summary>
@@ -62,11 +60,11 @@ public class XRBodyController : ARVROrigin
 	/// <param name="delta">Delta time</param>
 	public void updateSmoothRotation(float delta)
 	{
-		if (_rController.Input.JoystickXAxis > 0.5f)
+		if ( _rController.PrimaryJoystick.x > 0.5f)
 		{
 			this.Rotate(Vector3.Up, -2 * delta);
 		}
-		else if (_rController.Input.JoystickXAxis < -0.5f)
+		else if (_rController.PrimaryJoystick.x < -0.5f)
 		{
 			this.Rotate(Vector3.Up, 2 * delta);
 		}
@@ -77,11 +75,11 @@ public class XRBodyController : ARVROrigin
 	/// <param name="delta">Delta time</param>
 	public void updateRiseFallMovement(float delta)
 	{
-		if (_rController.Input.JoystickYAxis > 0.5f)
+		if (_rController.PrimaryJoystick.y > 0.5f)
 		{
 			this.Transform = this.Transform.Translated(this.Transform.basis.y * _speed * delta);
 		}
-		else if (_rController.Input.JoystickYAxis < -0.5f)
+		else if (_rController.PrimaryJoystick.y < -0.5f)
 		{
 			this.Transform = this.Transform.Translated(-this.Transform.basis.y * _speed * delta);
 		}

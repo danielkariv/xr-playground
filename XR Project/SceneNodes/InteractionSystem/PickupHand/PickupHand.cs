@@ -46,7 +46,7 @@ public class PickupHand : Spatial
 	{
 		bool grabstatus = false;
 		if (_controller != null)
-			grabstatus = _controller.Input.GripAxis > 0;
+			grabstatus = _controller.IsGripPressed;
 		if (!grabstatus)
 		{
 			PhysicsDirectSpaceState spaceState = GetWorld().DirectSpaceState;
