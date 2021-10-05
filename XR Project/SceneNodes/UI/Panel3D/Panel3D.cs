@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class Panel3D : Area
+public class Panel3D : Area, IIntractable
 {
 	// TODO: set panel size from script, building viewport and mesh size to fit.
 	private MeshInstance _mesh;
@@ -16,6 +16,9 @@ public class Panel3D : Area
 	[Export]
 	private float _clickDistance = 0.033f;
 	private Vector2 _screenSize;
+	
+	private ControllerService controller = null;
+	private Node originalParent;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -23,7 +26,12 @@ public class Panel3D : Area
 		_mesh = (MeshInstance)this.GetNode("Mesh");
 		_collisionShape = (CollisionShape)this.GetNode("CollisionShape");
 		_viewport = (Viewport)this.GetNode("Mesh/Viewport");
+		originalParent = this.GetParent();
 		InitPanel();
+	}
+	public override void _PhysicsProcess(float delta)
+	{
+		
 	}
 	/// <summary>
 	/// Initilized the UI Panel. 
@@ -97,5 +105,23 @@ public class Panel3D : Area
 		uiPos.x = ((uiPos.x / _screenSize.x) + 0.5f) * _viewport.Size.x;
 		uiPos.y = (0.5f - (uiPos.y / _screenSize.y)) * _viewport.Size.y;
 		return new Vector2(uiPos.x, uiPos.y);
+	}
+
+	public void Pickup(ControllerService controller){
+		GD.Print("Panel3D picked up by controller.");
+		this.controller = controller;
+		this.GetParent().RemoveChild(this);
+		this.controller.AddChild(this);
+	}
+
+	public void Drop(ControllerService controller){
+		GD.Print("Panel3D will now be dropped.");
+		if (this.controller == controller){
+			this.controller = null;
+			this.GetParent().RemoveChild(this);
+			this.originalParent.AddChild(this);
+		}
+		else
+			GD.PrintErr("Wrong Controller tries to remove itself from interactable object.");
 	}
 }
