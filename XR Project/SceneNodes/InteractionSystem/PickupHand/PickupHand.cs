@@ -43,32 +43,32 @@ public class PickupHand : Spatial
 	{
 		if(_controller == null)
 			return;
+		
 		if(_controller.IsGripJustReleased){
-			((IIntractable)holdingTarget).Drop(_controller);
+			if(holdingTarget != null)
+				((IIntractable)holdingTarget).Drop(_controller);
 			holdingTarget = null;
-		}else if (_controller.IsGripPressed){
-			if(holdingTarget == null){
-				PhysicsDirectSpaceState spaceState = GetWorld().DirectSpaceState;
-				_physicsShape.Transform = this.GlobalTransform;
-				Godot.Collections.Array result = spaceState.IntersectShape(_physicsShape);
-				// if we got results, checking for closest object and targeting it.
-				if (result.Count > 0)
+		}else if (_controller.IsGripPressed && holdingTarget == null){
+			PhysicsDirectSpaceState spaceState = GetWorld().DirectSpaceState;
+			_physicsShape.Transform = this.GlobalTransform;
+			Godot.Collections.Array result = spaceState.IntersectShape(_physicsShape);
+			// if we got results, checking for closest object and targeting it.
+			if (result.Count > 0)
+			{
+				holdingTarget = null;
+				float distance = float.MaxValue;
+				foreach (Godot.Collections.Dictionary item in result)
 				{
-					holdingTarget = null;
-					float distance = float.MaxValue;
-					foreach (Godot.Collections.Dictionary item in result)
+					// check the item for Interactable interface, and if it is a CollisionObject.
+					// then choose the closest to the controller.
+					if (item["collider"] is IIntractable && item["collider"] is CollisionObject body)
 					{
-						// check the item for Interactable interface, and if it is a CollisionObject.
-						// then choose the closest to the controller.
-						if (item["collider"] is IIntractable && item["collider"] is CollisionObject body)
+						float dist = body.GlobalTransform.origin.DistanceTo(GlobalTransform.origin);
+						if (distance >= dist)
 						{
-							float dist = body.GlobalTransform.origin.DistanceTo(GlobalTransform.origin);
-							if (distance >= dist)
-							{
-								distance = dist;
-								holdingTarget = body;
-								((IIntractable)holdingTarget).Pickup(_controller);
-							}
+							distance = dist;
+							holdingTarget = body;
+							((IIntractable)holdingTarget).Pickup(_controller);
 						}
 					}
 				}
