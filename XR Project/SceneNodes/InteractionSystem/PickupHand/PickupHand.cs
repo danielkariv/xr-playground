@@ -11,7 +11,7 @@ public class PickupHand : Spatial
 
 	private ControllerService _controller;
 
-	private RigidBody holdingTarget = null;
+	private CollisionObject holdingTarget = null;
 	private PhysicsShapeQueryParameters _physicsShape;
 
 	public override void _Ready()
@@ -36,59 +36,42 @@ public class PickupHand : Spatial
 		// TODO: would be better to pick a layer for pickup objects only. right now set for everything.
 		//_physicsShape.CollisionMask = 0x7fffffff;
 		_physicsShape.CollideWithBodies = true;
-		_physicsShape.CollideWithAreas = false;
-
-		
+		_physicsShape.CollideWithAreas = true;
 	}
-
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
+	
 	 public override void _PhysicsProcess(float delta)
 	{
-		bool grabstatus = false;
-		if (_controller != null)
-			grabstatus = _controller.IsGripPressed;
-		if (!grabstatus)
-		{
-			PhysicsDirectSpaceState spaceState = GetWorld().DirectSpaceState;
-			_physicsShape.Transform = this.GlobalTransform;
-			Godot.Collections.Array result = spaceState.IntersectShape(_physicsShape, 16);
-			// if we got results, checking for closest object and targeting it.
-			if (result.Count > 0)
-			{
-				holdingTarget = null;
-				float distance = float.MaxValue;
-				
-				foreach (Godot.Collections.Dictionary item in result)
+		if(_controller == null)
+			return;
+		if(_controller.IsGripJustReleased){
+			((IIntractable)holdingTarget).Drop(_controller);
+			holdingTarget = null;
+		}else if (_controller.IsGripPressed){
+			if(holdingTarget == null){
+				PhysicsDirectSpaceState spaceState = GetWorld().DirectSpaceState;
+				_physicsShape.Transform = this.GlobalTransform;
+				Godot.Collections.Array result = spaceState.IntersectShape(_physicsShape);
+				// if we got results, checking for closest object and targeting it.
+				if (result.Count > 0)
 				{
-					
-					if (item["collider"] is RigidBody body)
+					holdingTarget = null;
+					float distance = float.MaxValue;
+					foreach (Godot.Collections.Dictionary item in result)
 					{
-						float dist = body.GlobalTransform.origin.DistanceTo(GlobalTransform.origin);
-						if (distance >= dist)
+						// check the item for Interactable interface, and if it is a CollisionObject.
+						// then choose the closest to the controller.
+						if (item["collider"] is IIntractable && item["collider"] is CollisionObject body)
 						{
-							distance = dist;
-							holdingTarget = body;
+							float dist = body.GlobalTransform.origin.DistanceTo(GlobalTransform.origin);
+							if (distance >= dist)
+							{
+								distance = dist;
+								holdingTarget = body;
+								((IIntractable)holdingTarget).Pickup(_controller);
+							}
 						}
 					}
 				}
-			}
-			else
-			{
-				holdingTarget = null;
-			}
-		}
-		else
-		{
-			if(holdingTarget != null)
-			{
-				// adjust velocity to move toward hand.
-				//holdingTarget.LinearVelocity = (Transform.origin - holdingTarget.Transform.origin) / delta;
-				//GD.Print("Velo: " + holdingTarget.LinearVelocity);
-				holdingTarget.GlobalTransform = GlobalTransform;
-				
-				// adjust angular velocity to rotate to hand.
-				//holdingTarget.AngularDamp
-
 			}
 		}
 	}

@@ -3,6 +3,9 @@ using System;
 
 public class ControllerService : ARVRController
 {
+	private SpatialVelocityTracker velocityTracker;
+	public Vector3 Velocity = Vector3.Zero;
+	// Buttons, Joysticks and such ( Input variables)
 	public Vector2 PrimaryJoystick = Vector2.Zero;
 	public bool IsJoystickPressed = false, IsJoystickJustPressed = false, IsJoystickJustReleased = false;
 	public float TriggerAnalog = -1.0f;
@@ -12,9 +15,14 @@ public class ControllerService : ARVRController
 	public bool IsAXPressed = false, IsAXJustPressed = false, IsAXJustReleased = false;
 	public bool IsBYPressed = false, IsBYJustPressed = false, IsBYJustReleased = false;
 	public bool IsMenuPressed = false, IsMenuJustPressed = false, IsMenuJustReleased = false;
-
 	public bool IsSelectPressed = false, IsSelectJustPressed = false, IsSelectJustReleased = false;
-	// each input needs: bool isPressed, bool isJustPressed, bool isJustReleased, float getHoldTime, float value
+
+	public override void _Ready()
+	{
+		velocityTracker = new SpatialVelocityTracker();
+		velocityTracker.TrackPhysicsStep = true;
+		velocityTracker.Reset(GlobalTransform.origin);
+	}
 	public override void _Process(float delta)
 	{
 		if (this.GetIsActive()){
@@ -57,6 +65,10 @@ public class ControllerService : ARVRController
 			IsSelectJustReleased = (IsSelectPressed && !selectbutton && !IsSelectJustReleased);
 			IsSelectPressed = selectbutton;  // Select button
 			
+			velocityTracker.UpdatePosition(GlobalTransform.origin);
+			Velocity = velocityTracker.GetTrackedLinearVelocity();
+		}else {
+			Velocity = Vector3.Zero;
 		}
 
 	}
