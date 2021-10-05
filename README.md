@@ -10,3 +10,4 @@ The project built on top of Godot 3.4 Mono, and using OpenXR plugin.
 - Smooth turning.
 - Basic controllers (Inputs and velocity).
 - UI Panels, and finger touching.
+- Picking up and dropping objects, and can be customized to object needs.
