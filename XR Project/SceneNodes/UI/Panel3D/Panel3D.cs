@@ -109,17 +109,21 @@ public class Panel3D : Area, IIntractable
 
 	public void Pickup(ControllerService controller){
 		GD.Print("Panel3D picked up by controller.");
+		Transform global = this.GlobalTransform;
 		this.controller = controller;
 		this.GetParent().RemoveChild(this);
 		this.controller.AddChild(this);
+		this.GlobalTransform = global;
 	}
 
 	public void Drop(ControllerService controller){
 		GD.Print("Panel3D will now be dropped.");
 		if (this.controller == controller){
+			Transform global = this.GlobalTransform;
 			this.controller = null;
 			this.GetParent().RemoveChild(this);
 			this.originalParent.AddChild(this);
+			this.GlobalTransform = global;
 		}
 		else
 			GD.PrintErr("Wrong Controller tries to remove itself from interactable object.");
